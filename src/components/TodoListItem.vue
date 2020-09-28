@@ -2,31 +2,27 @@
   <li class="list-item">
     <div class="list-item__left">
       <input
+        @click="$emit('on-toggle-checkbox', id)"
         type="checkbox"
-        v-model="currentCheck"
+        v-model="isChecked"
         class="list-item__checkbox"
-        @click="onHandleCheckbox"
       />
-      <p
-        v-if="isTitleShown"
-        @click="onEditTitleVisibility"
-        class="list-item__text"
-      >
-        {{ todo.title }}
+      <p @click="startEditing" v-if="!isEditing" class="list-item__text">
+        {{ title }}
       </p>
-      <form v-else @submit.prevent="onSubmit" class="list-item__form">
+      <form v-else @submit.prevent="finishEditing" class="list-item__form">
         <input
+          @blur="isEditing = false"
           type="text"
           v-model="currentTitle"
           v-focus
-          @blur="isTitleShown = true"
           class="list-item__input"
         />
       </form>
     </div>
     <button
+      @click="$emit('on-delete-todo', id)"
       type="button"
-      @click="$emit('delete-todo', todo.id)"
       class="list-item__button"
     >
       &times;
@@ -36,36 +32,27 @@
 
 <script>
 export default {
-  props: ["todo"],
+  props: {
+    id: Number,
+    title: String,
+    isCompleted: Boolean,
+  },
   data() {
     return {
-      isTitleShown: true,
-      currentTitle: this.todo.title,
-      currentCheck: this.todo.isCompleted,
+      isEditing: false,
+      currentTitle: this.title,
+      isChecked: this.isCompleted,
     };
   },
   methods: {
-    onEditTitleVisibility() {
-      this.currentTitle = this.todo.title;
-      this.isTitleShown = false;
+    startEditing() {
+      this.currentTitle = this.title;
+      this.isEditing = true;
     },
-    onHandleCheckbox() {
-      this.currentCheck = !this.currentCheck;
-      this.$emit("edit-todo", {
-        id: this.todo.id,
-        title: this.currentTitle,
-        isCompleted: this.currentCheck,
-      });
-    },
-    onSubmit() {
-      this.currentTitle.trim()
-        ? this.$emit("edit-todo", {
-            id: this.todo.id,
-            title: this.currentTitle,
-            isCompleted: this.currentCheck,
-          })
-        : null;
-      this.isTitleShown = true;
+    finishEditing() {
+      if (this.currentTitle.trim())
+        this.$emit("on-edit-todo", { id: this.id, title: this.currentTitle });
+      this.isEditing = false;
     },
   },
   directives: {
@@ -80,13 +67,17 @@ export default {
 
 <style lang="scss" scoped>
 .list-item {
+  input {
+    color: #35495e;
+  }
+  color: #35495e;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px 20px;
   margin: 5px;
-  border: 1px solid red;
+  border: 2px solid #41b883;
   border-radius: 10px;
-
   &__left {
     width: 95%;
     display: flex;
@@ -107,17 +98,18 @@ export default {
     height: 100%;
     font-size: 18px;
     border: none;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid #41b883;
     outline: none;
   }
   &__button {
+    width: 25px;
+    height: 25px;
+    color: #41b883;
     background-color: white;
-    color: red;
     font-size: 14px;
     font-weight: 700;
-    border: 2px solid red;
+    border: 2px solid #41b883;
     border-radius: 50px;
-    outline: none;
     cursor: pointer;
   }
 }

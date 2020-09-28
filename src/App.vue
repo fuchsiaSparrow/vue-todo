@@ -1,8 +1,16 @@
 <template>
-  <div class="app" id="app">
-    <TodoAddForm @add-todo="addTodo" />
-    <hr />
-    <TodoList :todos="todos" @delete-todo="deleteTodo" @edit-todo="editTodo" />
+  <div id="app" class="app">
+    <header class="header">Vue ToDo App</header>
+    <section class="main-section">
+      <TodoAddForm @on-new-todo="addTodo" />
+      <hr class="hr"/>
+      <TodoList
+        :todos="todos"
+        @on-toggle-checkbox="toggleTodo"
+        @on-delete-todo="deleteTodo"
+        @on-edit-todo="editTodo"
+      />
+    </section>
   </div>
 </template>
 
@@ -22,19 +30,29 @@ export default {
     TodoAddForm,
   },
   methods: {
-    addTodo(todo) {
-      AxiosService.postTodo(todo).then((res) => {
-        this.todos.push(res);
+    toggleTodo(id) {
+      const index = this.todos.findIndex((el) => el.id === id);
+      const isCompleted = !this.todos[index].isCompleted;
+      AxiosService.patchTodo(id, { isCompleted }).then((res) => {
+        this.todos = this.todos.filter((t) =>
+          t.id === res.id ? (t.title = res.title) : t
+        );
       });
+    },
+    addTodo(newTitle) {
+      AxiosService.postTodo({ title: newTitle, isCompleted: false }).then(
+        (res) => {
+          this.todos.push(res);
+        }
+      );
     },
     deleteTodo(id) {
       AxiosService.deleteTodo(id).then((res) => {
         this.todos = this.todos.filter((todo) => todo.id !== id);
       });
     },
-    editTodo({ id, title, isCompleted }) {
-      console.log(id, title, isCompleted);
-      AxiosService.patchTodo(id, { title, isCompleted }).then((res) => {
+    editTodo({ id, title }) {
+      AxiosService.patchTodo(id, { title }).then((res) => {
         this.todos = this.todos.filter((t) =>
           t.id === res.id ? (t.title = res.title) : t
         );
@@ -51,17 +69,35 @@ export default {
 
 <style lang="scss">
 .app {
+  width: 100%;
+  height: 100vh;
+}
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  font-weight: 700;
+  font-size: 40px;
+  background-color: #41b883;
+}
+.main-section {
+  width: 50%;
   margin: 0 auto;
-  width: 80%;
-  border: 1px solid red;
-  border-radius: 10px;
+  padding: 30px;
+}
+.hr {
+  height: 1px;
+  border: none;
+  background-color: #41b883;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: sans-serif;
+  color: #35495e;
+  box-sizing: border-box;
+  input, button {
+    outline: none;
+  }
 }
 </style>

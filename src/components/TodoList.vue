@@ -1,11 +1,14 @@
 <template>
   <ul class="app-list">
     <TodoListItem
-      :todo="todo"
       v-for="todo of todos"
       :key="todo.id"
-      @delete-todo="deleteTodo"
-      @edit-todo="editTodo"
+      :id="todo.id"
+      :title="todo.title"
+      :isCompleted="todo.isCompleted"
+      @on-toggle-checkbox="toggleTodo"
+      @on-delete-todo="deleteTodo"
+      @on-edit-todo="editTodo"
     />
   </ul>
 </template>
@@ -18,11 +21,14 @@ export default {
     TodoListItem,
   },
   methods: {
+    toggleTodo(id) {
+      this.$emit("on-toggle-checkbox", id);
+    },
     deleteTodo(id) {
-      this.$emit("delete-todo", id);
+      this.$emit("on-delete-todo", id);
     },
     editTodo(todo) {
-      this.$emit("edit-todo", todo);
+      this.$emit("on-edit-todo", todo);
     },
   },
 };

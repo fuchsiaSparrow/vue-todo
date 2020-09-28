@@ -1,6 +1,6 @@
 <template>
-  <form class="form" @submit.prevent="onSubmit">
-    <input class="form__input" type="input" v-model="title" />
+  <form @submit.prevent="addTodo" class="form">
+    <input v-model="newTitle" type="text" class="form__input" />
     <button class="form__button" type="submit">Add</button>
   </form>
 </template>
@@ -9,19 +9,15 @@
 export default {
   data() {
     return {
-      title: "",
+      newTitle: "",
     };
   },
   methods: {
-    onSubmit() {
-      this.title.trim()
-        ? this.$emit("add-todo", {
-            id: Date.now(),
-            title: this.title,
-            isCompleted: false,
-          })
+    addTodo() {
+      this.newTitle.trim()
+        ? this.$emit("on-new-todo", this.newTitle)
         : null;
-      this.title = "";
+      this.newTitle = "";
     },
   },
 };
@@ -30,21 +26,21 @@ export default {
 <style lang="scss" scoped>
 .form {
   display: flex;
-  margin: 5px;
   width: 100%;
   height: 40px;
-  &__input {
-    width: calc(80% - 15px);
-    margin-right: 1%;
-    border: 1px solid red;
+  &__input, &__button {
+    font-size: 20px;
+    border: 2px solid  #41b883;
     border-radius: 10px;
+    color: #35495e;
+    background-color: #fff;
+  }
+  &__input {
+    width: 80%;
   }
   &__button {
-    width: calc(20% - 15px);
-    background: #fff;
-    border: 1px solid red;
-    border-radius: 10px;
-    outline: none;
+    width: 19%;
+    margin-left: 1%;
     cursor: pointer;
   }
 }
