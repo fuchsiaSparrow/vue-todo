@@ -1,18 +1,20 @@
 <template>
   <li class="list-item">
     <div class="list-item__left">
-      <input
-        @click="$emit('on-toggle-checkbox', id)"
-        type="checkbox"
-        v-model="isChecked"
-        class="list-item__checkbox"
-      />
+      <label class="custom-checkbox">
+        <input
+          @click="$emit('on-toggle-checkbox', id)"
+          type="checkbox"
+          v-model="isChecked"
+        />
+        <span></span>
+      </label>
       <p @click="startEditing" v-if="!isEditing" class="list-item__text">
         {{ title }}
       </p>
       <form v-else @submit.prevent="finishEditing" class="list-item__form">
         <input
-          @blur="isEditing = false"
+          @blur="isEditing = true"
           type="text"
           v-model="currentTitle"
           v-focus
@@ -94,11 +96,11 @@ export default {
     width: 100%;
   }
   &__input {
-    width: 100%;
+    width: 95%;
     height: 100%;
     font-size: 18px;
     border: none;
-    border-bottom: 1px solid #41b883;
+    border-bottom: 2px solid #41b883;
     outline: none;
   }
   &__button {
@@ -111,6 +113,33 @@ export default {
     border: 2px solid #41b883;
     border-radius: 50px;
     cursor: pointer;
+  }
+  /* для элемента input c type="checkbox" */
+  .custom-checkbox > input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+  /* создание в label псевдоэлемента before со следующими стилями */
+  .custom-checkbox > span::before {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #41b883;
+    border-radius: 50px;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    cursor: pointer;
+  }
+
+  /* стили для чекбокса, находящегося в состоянии checked */
+  .custom-checkbox > input:checked + span::before {
+    border-color: #41b883;
+    background-color: #41b883;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
   }
 }
 </style>
