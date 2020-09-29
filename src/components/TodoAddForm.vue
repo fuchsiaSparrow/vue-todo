@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="addTodo" class="form">
-    <input v-model="newTitle" type="text" class="form__input" />
+    <input v-model.trim="newTitle" type="text" class="form__input" />
     <button class="form__button" type="submit">Add</button>
   </form>
 </template>
@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     addTodo() {
-      if (this.newTitle.trim()) this.$emit('on-new-todo', this.newTitle);
+      if (this.newTitle) this.$emit('on-new-todo', this.newTitle);
       this.newTitle = '';
     },
   },

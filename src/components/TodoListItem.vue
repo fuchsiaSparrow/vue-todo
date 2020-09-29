@@ -16,7 +16,7 @@
         <input
           @blur="isEditing = false"
           type="text"
-          v-model="currentTitle"
+          v-model.trim="currentTitle"
           v-focus
           class="list-item__input"
         />
@@ -52,7 +52,7 @@ export default {
       this.isEditing = true;
     },
     finishEditing() {
-      if (this.currentTitle.trim()) this.$emit('on-edit-todo', { id: this.id, title: this.currentTitle });
+      if (this.currentTitle) this.$emit('on-edit-todo', { id: this.id, title: this.currentTitle });
       this.isEditing = false;
     },
   },

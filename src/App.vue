@@ -2,9 +2,9 @@
   <div id="app" class="app">
     <header class="header">Vue ToDo App</header>
     <section class="main-section">
-      <TodoAddForm @on-new-todo="addTodo" />
+      <todo-add-form @on-new-todo="addTodo" />
       <hr class="hr"/>
-      <TodoList
+      <todo-list
         :todos="todos"
         @on-toggle-checkbox="toggleTodo"
         @on-delete-todo="deleteTodo"
@@ -81,7 +81,7 @@ export default {
   background-color: #41b883;
 }
 .main-section {
-  width: 75%;
+  width: 70%;
   margin: 0 auto;
   padding: 30px;
 }

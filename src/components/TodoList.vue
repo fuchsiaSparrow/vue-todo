@@ -1,6 +1,6 @@
 <template>
   <ul class="app-list">
-    <TodoListItem
+    <todo-list-item
       v-for="todo of todos"
       :key="todo.id"
       :id="todo.id"
