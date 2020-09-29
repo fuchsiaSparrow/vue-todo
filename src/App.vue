@@ -15,16 +15,17 @@
 </template>
 
 <script>
-import TodoList from "@/components/TodoList";
-import TodoAddForm from "@/components/TodoAddForm";
-import AxiosService from "./utils/api";
+import TodoList from '@/components/TodoList';
+import TodoAddForm from '@/components/TodoAddForm';
+import AxiosService from './utils/api';
+
 export default {
   data() {
     return {
       todos: [],
     };
   },
-  name: "App",
+  name: 'App',
   components: {
     TodoList,
     TodoAddForm,
@@ -34,33 +35,29 @@ export default {
       const index = this.todos.findIndex((el) => el.id === id);
       const isCompleted = !this.todos[index].isCompleted;
       AxiosService.patchTodo(id, { isCompleted }).then((res) => {
-        this.todos = this.todos.filter((t) =>
-          t.id === res.id ? (t.title = res.title) : t
-        );
+        this.todos = this.todos.filter((t) => (t.id === res.id ? (t.title = res.title) : t));
       });
     },
     addTodo(newTitle) {
       AxiosService.postTodo({ title: newTitle, isCompleted: false }).then(
         (res) => {
           this.todos.push(res);
-        }
+        },
       );
     },
     deleteTodo(id) {
-      AxiosService.deleteTodo(id).then((res) => {
+      AxiosService.deleteTodo(id).then(() => {
         this.todos = this.todos.filter((todo) => todo.id !== id);
       });
     },
     editTodo({ id, title }) {
       AxiosService.patchTodo(id, { title }).then((res) => {
-        this.todos = this.todos.filter((t) =>
-          t.id === res.id ? (t.title = res.title) : t
-        );
+        this.todos = this.todos.filter((t) => (t.id === res.id ? (t.title = res.title) : t));
       });
     },
   },
   mounted() {
-    AxiosService.getTodos("").then((res) => {
+    AxiosService.getTodos('').then((res) => {
       this.todos = res.data;
     });
   },

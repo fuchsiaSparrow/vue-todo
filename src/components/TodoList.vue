@@ -14,21 +14,22 @@
 </template>
 
 <script>
-import TodoListItem from "@/components/TodoListItem";
+import TodoListItem from '@/components/TodoListItem';
+
 export default {
-  props: ["todos"],
+  props: ['todos'],
   components: {
     TodoListItem,
   },
   methods: {
     toggleTodo(id) {
-      this.$emit("on-toggle-checkbox", id);
+      this.$emit('on-toggle-checkbox', id);
     },
     deleteTodo(id) {
-      this.$emit("on-delete-todo", id);
+      this.$emit('on-delete-todo', id);
     },
     editTodo(todo) {
-      this.$emit("on-edit-todo", todo);
+      this.$emit('on-edit-todo', todo);
     },
   },
 };

@@ -9,15 +9,15 @@
 export default {
   data() {
     return {
-      newTitle: "",
+      newTitle: '',
     };
   },
   methods: {
     addTodo() {
       this.newTitle.trim()
-        ? this.$emit("on-new-todo", this.newTitle)
+        ? this.$emit('on-new-todo', this.newTitle)
         : null;
-      this.newTitle = "";
+      this.newTitle = '';
     },
   },
 };

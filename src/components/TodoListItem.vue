@@ -14,7 +14,7 @@
       </p>
       <form v-else @submit.prevent="finishEditing" class="list-item__form">
         <input
-          @blur="isEditing = true"
+          @blur="isEditing = false"
           type="text"
           v-model="currentTitle"
           v-focus
@@ -52,14 +52,13 @@ export default {
       this.isEditing = true;
     },
     finishEditing() {
-      if (this.currentTitle.trim())
-        this.$emit("on-edit-todo", { id: this.id, title: this.currentTitle });
+      if (this.currentTitle.trim()) this.$emit('on-edit-todo', { id: this.id, title: this.currentTitle });
       this.isEditing = false;
     },
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted(el) {
         el.focus();
       },
     },
@@ -102,6 +101,8 @@ export default {
     border: none;
     border-bottom: 2px solid #41b883;
     outline: none;
+    padding: 0;
+    box-sizing: border-box;
   }
   &__button {
     width: 25px;
