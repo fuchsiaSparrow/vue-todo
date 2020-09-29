@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import TodoList from '@/components/TodoList';
-import TodoAddForm from '@/components/TodoAddForm';
+import TodoList from './components/TodoList.vue';
+import TodoAddForm from './components/TodoAddForm.vue';
 import AxiosService from './utils/api';
 
 export default {
@@ -35,7 +35,7 @@ export default {
       const index = this.todos.findIndex((el) => el.id === id);
       const isCompleted = !this.todos[index].isCompleted;
       AxiosService.patchTodo(id, { isCompleted }).then((res) => {
-        this.todos = this.todos.filter((t) => (t.id === res.id ? (t.title = res.title) : t));
+        this.todos = [...this.todos.slice(0, index), res, ...this.todos.slice(index + 1)];
       });
     },
     addTodo(newTitle) {
@@ -52,7 +52,8 @@ export default {
     },
     editTodo({ id, title }) {
       AxiosService.patchTodo(id, { title }).then((res) => {
-        this.todos = this.todos.filter((t) => (t.id === res.id ? (t.title = res.title) : t));
+        const index = this.todos.findIndex((el) => el.id === id);
+        this.todos = [...this.todos.slice(0, index), res, ...this.todos.slice(index + 1)];
       });
     },
   },
@@ -80,7 +81,7 @@ export default {
   background-color: #41b883;
 }
 .main-section {
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
   padding: 30px;
 }

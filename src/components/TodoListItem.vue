@@ -84,6 +84,7 @@ export default {
     display: flex;
   }
   &__text {
+    overflow: hidden;
     width: 100%;
     height: 100%;
     text-align: left;

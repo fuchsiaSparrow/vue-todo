@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import TodoListItem from '@/components/TodoListItem';
+import TodoListItem from './TodoListItem.vue';
 
 export default {
   props: ['todos'],

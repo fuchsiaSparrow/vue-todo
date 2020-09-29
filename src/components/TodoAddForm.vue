@@ -14,9 +14,7 @@ export default {
   },
   methods: {
     addTodo() {
-      this.newTitle.trim()
-        ? this.$emit('on-new-todo', this.newTitle)
-        : null;
+      if (this.newTitle.trim()) this.$emit('on-new-todo', this.newTitle);
       this.newTitle = '';
     },
   },
@@ -39,6 +37,7 @@ export default {
     width: 80%;
   }
   &__button {
+    padding: 0;
     width: 19%;
     margin-left: 1%;
     cursor: pointer;
