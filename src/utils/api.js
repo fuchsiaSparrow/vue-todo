@@ -12,8 +12,7 @@ const AxiosService = {
   getTodos: (url) => api.get(`/todos/${url}`),
   postTodo: (value) => returnData('post', '/todos/', value),
   deleteTodo: (id) => returnData('delete', `/todos/${id}`),
-  patchTodo: (id, label, isCompleted) =>
-    returnData('patch', `/todos/${id}`, label, isCompleted),
+  patchTodo: (id, label, isCompleted) => returnData('patch', `/todos/${id}`, label, isCompleted),
 };
 
 export default AxiosService;

@@ -1,24 +1,19 @@
 {
   "todos": [
     {
-      "title": "one",
+      "title": "One",
+      "isCompleted": false,
+      "id": 1
+    },
+    {
+      "title": "Two",
       "isCompleted": false,
       "id": 2
     },
     {
-      "title": "two",
-      "isCompleted": true,
+      "title": "Three",
+      "isCompleted": false,
       "id": 3
-    },
-    {
-      "title": "three",
-      "isCompleted": false,
-      "id": 4
-    },
-    {
-      "title": "ewr",
-      "isCompleted": false,
-      "id": 5
     }
   ]
 }
