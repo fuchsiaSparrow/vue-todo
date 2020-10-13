@@ -11,6 +11,8 @@ export default new Vuex.Store({
   },
   getters: {
     todos: (state) => state.todos,
+    doneTodos: (state) => state.todos.filter((todo) => todo.isCompleted),
+    undoneTodos: (state) => state.todos.filter((todo) => !todo.isCompleted),
   },
   mutations: {
     getAllTodos(state, todos) {

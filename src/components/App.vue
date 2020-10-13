@@ -1,15 +1,18 @@
 <template>
   <div id="app" class="app">
-    <header class="header">Vue ToDo App</header>
+    <div class="header">
+    <Header />
+    </div>
     <section class="main-section">
       <todo-add-form @on-new-todo="addTodo" />
       <hr class="hr" />
-      <todo-list
+      <!-- <todo-list
         :todos="todos"
         @on-toggle-checkbox="toggleTodo"
         @on-delete-todo="deleteTodo"
         @on-edit-todo="editTodo"
-      />
+      /> -->
+      <router-view></router-view>
     </section>
   </div>
 </template>
@@ -18,17 +21,17 @@
 import { mapGetters, mapActions } from 'vuex';
 import TodoList from './TodoList.vue';
 import TodoAddForm from './TodoAddForm.vue';
+import Header from './Header.vue';
 
 export default {
   data() {
     return {
-      // todos: [{ title: "wqe" }, { title: "asdasd" }],
     };
   },
   name: 'App',
   components: {
-    TodoList,
     TodoAddForm,
+    Header,
   },
   computed: {
     ...mapGetters({
