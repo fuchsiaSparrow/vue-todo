@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="addTodo" class="form">
-    <input v-model.trim="newTitle" type="text" class="form__input" />
+    <input v-model.trim.lazy="newTitle" type="text" class="form__input" />
     <button class="form__button" type="submit">Add</button>
   </form>
 </template>
@@ -26,9 +26,10 @@ export default {
   display: flex;
   width: 100%;
   height: 40px;
-  &__input, &__button {
+  &__input,
+  &__button {
     font-size: 20px;
-    border: 2px solid  #41b883;
+    border: 2px solid #41b883;
     border-radius: 10px;
     color: #35495e;
     background-color: #fff;

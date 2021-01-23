@@ -16,7 +16,7 @@
         <input
           @blur="isEditing = false"
           type="text"
-          v-model.trim="currentTitle"
+          v-model.trim.lazy="currentTitle"
           v-focus
           class="list-item__input"
         />

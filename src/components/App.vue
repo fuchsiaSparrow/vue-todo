@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app">
     <div class="header">
-    <Header />
+      <Header />
     </div>
     <section class="main-section">
       <todo-add-form @on-new-todo="addTodo" />
@@ -19,20 +19,25 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import TodoList from './TodoList.vue';
+// import TodoList from './TodoList.vue';
 import TodoAddForm from './TodoAddForm.vue';
 import Header from './Header.vue';
 
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   name: 'App',
   components: {
     TodoAddForm,
+    // TodoList,
     Header,
   },
+  // computed: {
+  //   ...mapGetters({
+  //     todos: 'todos',
+  //   }),
+  // },
   computed: {
     ...mapGetters({
       todos: 'todos',
